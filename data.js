@@ -17,7 +17,7 @@ window.PROFILE = {
   summary:
     "Backend engineer who spent **3 years at Epicor** making production software work where the network doesn't, reducing data synchronization failures between technicians' offline devices and the server from **1 in 3 runs to nearly zero**. Now pursuing an **MS in Computer Engineering at NYU Tandon** and expanding into Python and machine learning systems.",
 
-  resume: "assets/Faizan_Ahmed_Khan_Resume.pdf",
+  resume: "assets/Faizan_Ahmed_Khan_Resume.pdf?v=2026-11",
 
   contact: {
     email: "faizanahmedkhan005@gmail.com",
