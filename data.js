@@ -3,17 +3,19 @@
  *  All portfolio content lives here. Edit this file to update
  *  the site — both the terminal and the recruiter view read it.
  *  Wrap text in **double asterisks** to highlight a metric.
+ *
+ *  Rule of thumb: everything here should match the résumé PDF.
  * ─────────────────────────────────────────────────────────────
  */
 window.PROFILE = {
   name: "Faizan Ahmed Khan",
   first: "Faizan",
-  title: "Software Engineer",
-  tagline: "Backend · AI/ML systems · Embedded · Forward deployed",
+  title: "Backend Engineer",
+  tagline: "Offline-first sync · Production reliability · Forward deployed",
   location: "New York, NY",
-  status: "Seeking Summer 2027 internships: AI/ML · Forward Deployed · Backend · Embedded",
+  status: "Seeking Summer 2027 internships: backend & forward-deployed engineering",
   summary:
-    "I build reliable systems **from the device to the cloud**, and I take them all the way to the customer. For 3 years at Epicor I shipped production .NET, owning an offline-first field service app as its **sole developer**: sync over flaky connections, memory on real devices, performance at ERP scale, and **fixing real customer issues in production**. Now in an **MS in Computer Engineering at NYU Tandon**, I'm going deeper at both ends of the stack: **AI/ML & MLOps** above, **embedded C++ & real-time systems** below.",
+    "Backend engineer who spent **3 years at Epicor** making production software work where the network doesn't, reducing data synchronization failures between technicians' offline devices and the server from **1 in 3 runs to nearly zero**. Now pursuing an **MS in Computer Engineering at NYU Tandon** and expanding into Python and machine learning systems.",
 
   resume: "assets/Faizan_Ahmed_Khan_Resume.pdf",
 
@@ -24,83 +26,89 @@ window.PROFILE = {
   },
 
   impact: [
-    { value: "3 yrs", label: "shipping production .NET at Epicor" },
-    { value: "5–6s → 1s", label: "screen loads on 10,000+ record views" },
-    { value: "~50%", label: "faster API responses from SQL tuning" },
-    { value: "<2 min", label: "offline sync of 25,000+ records (was 3–4 min)" },
+    { value: "1 in 3 → ~0", label: "failed offline syncs, ending loss of technicians' unsynced, billable work" },
+    { value: "0 reinstalls", label: "forced app reinstalls across 20+ releases, via versioned on-device SQL migrations" },
+    { value: "30–40s → <1s", label: "load times on legacy pages migrated to .NET 8 MVC" },
+    { value: "5–6s → ~1s", label: "load times on 10,000+ record screens" },
   ],
 
-  // "Where I fit": one card per kind of role you're applying for.
+  // Role tracks. stage "proven" = backed by shipped work (shown first, as the headline).
+  // stage "building" = where you're heading (shown later, clearly labeled).
   // Set wip: true on a proof point to show it as in progress.
   focus: [
     {
       id: "backend",
-      title: "Backend & Distributed Systems",
+      stage: "proven",
+      title: "Backend & Data Sync",
       level: "3 yrs production",
-      lead: "My core. Services, data, and the hard parts that live between them.",
+      lead: "Making production software work where the network doesn't.",
       proof: [
-        "Owned the API + SQL layer for multi-tenant ERP customers; **~50% faster** responses",
-        "Concurrency done right: row locking against lost updates in **EvalNow Lite**",
-        "Retries, backoff, dead-letter queues and audit trails in a **distributed task queue**",
+        "Rebuilt an offline **sync engine** with batched incremental sync over 25,000+ records and conflict handling: failed syncs **1 in 3 → nearly zero**",
+        "**Versioned SQL migrations** for the on-device database: no forced reinstalls across **20+ releases**, upgrading and downgrading across up to 5 app versions",
+        "Server-side pagination and stored-procedure tuning: **30–40s → under 1s** on migrated pages",
+        "**EvalNow Lite**: lost updates prevented with PostgreSQL SELECT … FOR UPDATE row locks",
       ],
-      keywords: ["C#/.NET", "Python", "PostgreSQL", "Redis", "REST", "Azure"],
-    },
-    {
-      id: "ml",
-      title: "AI/ML Systems & MLOps",
-      level: "growing fast",
-      lead: "Getting models out of notebooks and into reliable production pipelines.",
-      proof: [
-        "Production **CI/CD, Docker and release engineering**: the backbone of MLOps",
-        "Python services with FastAPI, Pydantic and async Postgres, ready for model serving",
-        "ML coursework at NYU (scikit-learn, pandas); **MLOps in Spring 2027**",
-        { text: "**On-watch classification** of motion features in the SynapSense wearable (edge ML)", wip: true },
-      ],
-      keywords: ["Python", "FastAPI", "Docker", "GitHub Actions", "scikit-learn", "CI/CD"],
-    },
-    {
-      id: "edge",
-      title: "Embedded & Edge",
-      level: "hands-on now",
-      lead: "Software that has to work on constrained devices, offline, for a whole shift.",
-      proof: [
-        "Shipped an **offline-first app on field devices**: sync over intermittent connectivity",
-        "Fixed long-shift crashes through **memory profiling** and lifecycle-aware resource disposal",
-        "Real-Time Embedded Systems + Computer Architecture coursework at NYU",
-        { text: "**SynapSense**: designing a seizure-alert **wearable watch** on an nRF52840 (C++), with on-watch sensing and classification and alerts via a paired phone", wip: true },
-      ],
-      keywords: ["C++", "PlatformIO", "nRF52840", "Real-time systems", "Computer architecture", "Offline sync"],
+      keywords: ["C# / .NET", "Python / FastAPI", "SQL Server", "PostgreSQL", "Azure", "REST"],
     },
     {
       id: "fde",
+      stage: "proven",
       title: "Forward Deployed Engineering",
-      level: "3 yrs customer-facing",
-      lead: "Taking software from a customer's problem to a fix running in their production.",
+      level: "3 yrs with field users",
+      lead: "Owning software that real customers depend on, from their problem to a fix in their hands.",
       proof: [
-        "Owned a product used by **Epicor Kinetic and P21 ERP customers**; resolved customer-reported production issues end to end",
-        "Built **client onboarding** tools (company setup, users, credentials) and per-company configuration",
-        "Delivered **customer-specific ERP workflow** modules and scaled the app to large enterprise customers",
+        "Primary and later **sole developer** of the Epicor FSM app, used by service businesses and **Kinetic and P21 customers**",
+        "Drove the fix for a **memory leak that crashed the app on site** after about 10 minutes, traced via memory profiling",
+        "Designed the **multi-view scheduling calendar** for rescheduling technician jobs, and built **web reports** on technician time use and budget adherence",
+        "Shipped the Xamarin → .NET MAUI migration in **about 2.5 months**, ahead of Xamarin's end of support",
       ],
-      keywords: ["Customer delivery", "Enterprise ERP", "Production debugging", "Multi-tenant", "Release ownership"],
+      keywords: ["Customer workflows", "Field users", "Production debugging", "Release ownership", "Azure AD / MSAL"],
+    },
+    {
+      id: "ml",
+      stage: "building",
+      title: "AI/ML Systems & MLOps",
+      level: "building toward",
+      lead: "Where I'm heading: the systems side of machine learning.",
+      proof: [
+        "Taking **Machine Learning** at NYU this semester (NumPy, pandas, scikit-learn, regression, k-NN)",
+        { text: "**MLOps** course", wip: true, badge: "Spring 2027" },
+        "Python / FastAPI backend experience from **EvalNow Lite**, the serving layer I plan to build on",
+        { text: "Motion classifier for the **SynapSense** watch (rule-based or ML)", wip: true, badge: "in design" },
+      ],
+      keywords: ["Python", "scikit-learn", "pandas", "FastAPI"],
+    },
+    {
+      id: "edge",
+      stage: "building",
+      title: "Embedded & Edge",
+      level: "building toward",
+      lead: "Taking what I learned on offline field devices down to the hardware.",
+      proof: [
+        "Taking **Real-Time Embedded Systems** and **Computer Architecture** at NYU this semester",
+        "3 years building an **offline-first app** for technicians' devices with unreliable connectivity",
+        { text: "**SynapSense**: designing a seizure-alert wearable watch in C++ (PlatformIO) on an nRF52840", wip: true, badge: "in design" },
+      ],
+      keywords: ["C++", "PlatformIO", "nRF52840", "Real-time systems"],
     },
   ],
 
-  // What you're doing now / next (shown under "Where I fit" and by the `now` command)
+  // What you're doing now / next (shown under "Building toward" and by the `now` command)
   now: [
     { when: "Fall 2026", what: "NYU Tandon: Machine Learning · Computer Architecture · Real-Time Embedded Systems" },
-    { when: "Dec 2026", what: "SynapSense: seizure-alert wearable watch, in design (embedded C++ + on-device ML)" },
+    { when: "Dec 2026", what: "SynapSense: seizure-alert wearable watch, in design" },
     { when: "Spring 2027", what: "MLOps" },
-    { when: "Summer 2027", what: "Internship: AI/ML · forward deployed · backend · embedded", highlight: true },
+    { when: "Summer 2027", what: "Internship: backend · forward deployed · ML systems · embedded", highlight: true },
   ],
 
   skills: [
-    { group: "languages", items: ["C#", "Python", "C++", "SQL", "JavaScript"] },
-    { group: "backend", items: ["ASP.NET Core", "MVC", "Web API", ".NET 8/10", "FastAPI", "Pydantic", "REST", "OData", "LINQ", "EF Core", "JWT"] },
-    { group: "databases", items: ["SQL Server", "PostgreSQL", "Redis", "SQLite", "asyncpg", "Stored procedures", "Schema design", "Alembic"] },
-    { group: "cloud-devops", items: ["Azure", "Azure AD", "MSAL", "Azure DevOps", "GitHub Actions", "Docker", "Git", "CI/CD"] },
-    { group: "embedded", items: ["C++", "PlatformIO", "nRF52840 (XIAO Sense)", "IMU sensing", "On-device feature extraction", "Real-time systems"] },
-    { group: "mobile-testing", items: [".NET MAUI", "Xamarin", "MVVM", "Prism", "iOS", "Android", "xUnit", "NUnit", "Testcontainers"] },
-    { group: "ml (coursework)", items: ["NumPy", "pandas", "scikit-learn", "Regression", "k-NN"] },
+    { group: "languages", items: ["C#", "Python", "SQL", "JavaScript"] },
+    { group: "backend", items: ["ASP.NET Core", ".NET 8/10", "Web API", "MVC", "EF Core", "LINQ", "REST", "OData", "JWT", "FastAPI", "Pydantic"] },
+    { group: "databases", items: ["SQL Server", "PostgreSQL", "SQLite", "Redis", "Stored procedures", "Schema design", "asyncpg", "Alembic"] },
+    { group: "cloud-devops", items: ["Azure", "Azure DevOps", "Azure AD", "MSAL", "Docker", "GitHub Actions", "CI/CD", "Git"] },
+    { group: "mobile", items: [".NET MAUI", "Xamarin", "MVVM", "Prism", "iOS", "Android"] },
+    { group: "testing", items: ["xUnit", "NUnit"] },
+    { group: "machine-learning", items: ["NumPy", "pandas", "scikit-learn", "Linear & logistic regression", "k-nearest neighbors"] },
   ],
 
   experience: [
@@ -112,50 +120,38 @@ window.PROFILE = {
           title: "Associate Product Developer",
           dates: "Aug 2023 – Jan 2026",
           bullets: [
-            "Primary and later **sole developer** of a .NET MAUI field service app, sold standalone and as an add-on for Epicor Kinetic and P21 ERP customers; shipped monthly minor and quarterly major releases through Azure DevOps CI/CD.",
-            "Redesigned offline sync of billing-critical field data, replacing wipe-and-reload with batched incremental reconciliation over **25,000+ part records**, cutting sync from **3–4 min to under 2** and eliminating hangs.",
-            "Led the scale-up to large ERP customers: tuned SQL Server stored procedures for **~50% faster API responses** and built OData server-side pagination with virtualization, cutting 10,000+ record screen loads from **5–6s to ~1s**.",
-            "Diagnosed crashes during long field shifts with memory profiling — traced to retained UI components and undisposed camera streams — and fixed them with lifecycle-aware disposal.",
-            "Migrated legacy pages to .NET 8 MVC and built Web API / MVC modules for **multi-tenant ERP clients** secured with MSAL and Azure AD.",
-            "Built admin tooling for client onboarding, user management, and per-company custom-field configuration.",
+            "Owned, as primary and later **sole developer**, the .NET MAUI app for Epicor FSM, used by service businesses and Kinetic and P21 customers to schedule technicians' jobs, track parts and labor offline, and sync that work to the server for billing.",
+            "Reduced failed syncs from **about 1 in 3 to nearly zero** by rebuilding the offline sync engine with batched incremental sync over 25,000+ records and conflict handling, ending loss of technicians' unsynced, billable work.",
+            "Implemented Azure AD sign-in with MSAL that remembers the last user, so a returning technician skips the full resync and a different user gets a clean wipe and fresh sync.",
+            "Eliminated forced app reinstalls across **20+ releases** by building versioned SQL migrations for the on-device database, supporting upgrades and downgrades across up to 5 app versions.",
+            "Drove the fix for a memory leak that **crashed the app for technicians on site** after about 10 minutes of use, tracing it via memory profiling to retained UI components and undisposed camera streams.",
+            "Designed the app's multi-view scheduling calendar for viewing and rescheduling technician jobs, and built web reports on technician time use and adherence to budgets and estimates.",
+            "Improved load times from **5–6s to about 1s** on 10,000+ record screens and from **30–40s to under 1s** on legacy pages migrated to .NET 8 MVC, using server-side pagination and stored procedure tuning.",
           ],
         },
         {
           title: "Software Developer Intern",
           dates: "Feb 2023 – Aug 2023",
           bullets: [
-            "Completed, with one teammate, the full **Xamarin → .NET MAUI migration** and UI overhaul of a production mobile app, introducing decoupled MVVM with Prism.",
-            "Built configurable ASP.NET MVC modules for customer-specific ERP workflows.",
+            "Migrated the production field service app from **Xamarin to .NET MAUI** with one teammate in about 2.5 months ahead of Xamarin's end of support, ramping up on both frameworks from scratch.",
+            "Redesigned the app's UI in Figma to Epicor design standards and built it once approved, introducing MVVM with Prism and rebuilding broken navigation across iOS, Android, and Windows.",
           ],
         },
       ],
     },
   ],
 
+  // First project should be one that runs. In-design work goes last.
   projects: [
-    {
-      name: "SynapSense",
-      stack: ["C++", "PlatformIO", "XIAO nRF52840 Sense", "IMU", "On-device ML"],
-      url: "", // add the repo link here when it's public
-      status: "In design · team project · Dec 2026",
-      blurb: "A wearable watch we're designing that watches wrist motion for seizure patterns and alerts a caregiver through the wearer's paired smartphone.",
-      bullets: [
-        "Designing the **watch firmware in C++ with PlatformIO** on a **Seeed XIAO nRF52840 Sense**, continuously sampling motion and extracting signal features **on the watch**.",
-        "Features are evaluated by a rule-based or **machine-learning classifier**; only a sustained pattern consistent with a target seizure pattern creates an **event record**.",
-        "When an event is recorded, the watch sends an **alert through a paired smartphone**.",
-        "Primary prototype target: **generalized and focal-to-bilateral tonic–clonic seizures**; selected focal motor or tonic events are a research target where a person-specific pattern can be established.",
-        "Clearly scoped: it detects motion patterns correlated with seizures, does not measure brain activity, and **is not a diagnostic device**.",
-      ],
-    },
     {
       name: "EvalNow Lite",
       stack: ["Python", "FastAPI", "PostgreSQL"],
       url: "https://github.com/faizkhan005/evalnow-lite",
-      blurb: "Blind mutual-evaluation backend: neither party sees the other's submission until both submit.",
+      blurb: "Backend for clinical training evaluations: a student and faculty member review each other, and neither sees the other's review until both submit.",
       bullets: [
-        "Four-state machine advanced under **SELECT … FOR UPDATE** row locking to prevent lost-update races.",
-        "Visibility enforced in SQL, not response filtering; authorization derived from session participation, not token role claims.",
-        "Refresh-token rotation with **reuse detection** and family-wide revocation.",
+        "Prevented lost updates when both parties submit at once with a four-state machine guarded by PostgreSQL **SELECT … FOR UPDATE** row locks.",
+        "Kept reviews hidden by enforcing blindness **in the SQL query** instead of filtering responses, and derived access from session participation, not the token's role claim.",
+        "Secured sessions with **refresh-token rotation**, family-wide revocation on token reuse, and a 20-minute inactivity timeout.",
       ],
     },
     {
@@ -175,7 +171,21 @@ window.PROFILE = {
       blurb: "Background job service with production-grade failure handling.",
       bullets: [
         "Configurable retry with **exponential backoff**, plus a dead-letter queue and full failure audit trail.",
-        "Correlation-ID structured logging; covered by xUnit + Testcontainers tests.",
+        "Correlation-ID structured logging.",
+      ],
+    },
+    {
+      name: "SynapSense",
+      stack: ["C++", "PlatformIO", "XIAO nRF52840 Sense", "IMU"],
+      url: "", // add the repo link here when it's public
+      status: "In design · team project · Dec 2026",
+      blurb: "A wearable watch we're designing that watches wrist motion for seizure patterns and alerts a caregiver through the wearer's paired smartphone.",
+      bullets: [
+        "Designing the **watch firmware in C++ with PlatformIO** on a **Seeed XIAO nRF52840 Sense**, continuously sampling motion and extracting signal features **on the watch**.",
+        "Features are evaluated by a rule-based or **machine-learning classifier**; only a sustained pattern consistent with a target seizure pattern creates an **event record**.",
+        "When an event is recorded, the watch sends an **alert through a paired smartphone**.",
+        "Primary prototype target: **generalized and focal-to-bilateral tonic–clonic seizures**; selected focal motor or tonic events are a research target where a person-specific pattern can be established.",
+        "Clearly scoped: it detects motion patterns correlated with seizures, does not measure brain activity, and **is not a diagnostic device**.",
       ],
     },
   ],
@@ -183,14 +193,14 @@ window.PROFILE = {
   education: [
     {
       school: "New York University, Tandon School of Engineering",
-      degree: "MS, Computer Engineering",
+      degree: "Master of Science (MS), Computer Engineering",
       dates: "Sep 2026 – Dec 2027 (expected)",
       place: "Brooklyn, NY",
-      note: "Fall 2026: Machine Learning, Computer Architecture, Real-Time Embedded Systems · Spring 2027: MLOps",
+      note: "Current coursework: Machine Learning, Computer Architecture, Real-Time Embedded Systems",
     },
     {
       school: "Vidyavardhaka College of Engineering",
-      degree: "BE, Computer Science",
+      degree: "Bachelor of Engineering (BE), Computer Science",
       dates: "Aug 2019 – May 2023",
       place: "Mysuru, India",
       note: "CGPA: 8.79 / 10",

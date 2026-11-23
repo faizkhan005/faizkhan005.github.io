@@ -20,7 +20,16 @@
   const short = (url) => url.replace(/^https?:\/\//, "");
   const tags = (arr) => `<span class="tags">${arr.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</span>`;
   const proofItem = (p) => (typeof p === "string" ? { text: p } : p);
-  const LAYER = { backend: "cloud / services", ml: "models / pipelines", edge: "devices / edge", fde: "customers / field" };
+  const LAYER = { backend: "services / data", ml: "models / pipelines", edge: "devices / hardware", fde: "customers / field" };
+  const proofLi = (p) =>
+    `<li class="${p.wip ? "wip" : ""}">${hl(p.text)}${p.wip ? ` <span class="wip-badge">${esc(p.badge || "in progress")}</span>` : ""}</li>`;
+  const trackCard = (f) => `<div class="card g-track reveal${f.stage === "building" ? " building" : ""}">
+      <div class="top"><span>${esc(LAYER[f.id] || "")}</span><span class="level">${esc(f.level)}</span></div>
+      <h3>${esc(f.title)}</h3>
+      <p class="blurb">${esc(f.lead)}</p>
+      <ul>${f.proof.map(proofItem).map(proofLi).join("")}</ul>
+      ${tags(f.keywords)}
+    </div>`;
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } },
@@ -88,22 +97,17 @@
     print(aboutHtml() + `<p class="dim">next → ${cmdLink("focus")} · ${cmdLink("impact")} · ${cmdLink("experience")} · ${cmdLink("projects")}</p>`);
   }, { aliases: ["bio", "me"] });
 
-  def("focus", "where I fit: backend · AI/ML · embedded · forward deployed", () => {
-    const html = P.focus
-      .map(
-        (f, i) => `<div class="entry">
-          <div class="entry-h"><span><span class="dim">[${i + 1}]</span> <span class="accent bold">${esc(f.title)}</span></span><span class="warn">${esc(f.level)}</span></div>
+  def("focus", "what I do now, and what I'm building toward", () => {
+    const entry = (f) => `<div class="entry${f.stage === "building" ? " building" : ""}">
+          <div class="entry-h"><span class="accent bold">${esc(f.title)}</span><span class="${f.stage === "building" ? "dim" : "warn"}">${esc(f.level)}</span></div>
           <p class="dim" style="margin:2px 0 6px">${esc(LAYER[f.id] || "")} · ${esc(f.lead)}</p>
-          <ul class="proof">${f.proof
-            .map(proofItem)
-            .map((p) => `<li class="${p.wip ? "wip" : ""}">${hl(p.text)}${p.wip ? ' <span class="wip-badge">in progress</span>' : ""}</li>`)
-            .join("")}</ul>
+          <ul class="proof">${f.proof.map(proofItem).map(proofLi).join("")}</ul>
           ${tags(f.keywords)}
-        </div>`
-      )
-      .join("");
+        </div>`;
     print(
-      `<p class="dim">// I work across the stack, from the device to the cloud.</p>${html}<p class="dim">what's next → ${cmdLink("now")}</p>`
+      `<p class="dim">// proven: 3 years of shipped production work</p>${P.focus.filter((f) => f.stage !== "building").map(entry).join("")}` +
+        `<p class="dim" style="margin-top:14px">// building toward</p>${P.focus.filter((f) => f.stage === "building").map(entry).join("")}` +
+        `<p class="dim">timeline → ${cmdLink("now")}</p>`
     );
   }, { aliases: ["fit", "tracks", "roles", "pivot"] });
 
@@ -408,7 +412,7 @@
       `${OK} Booting <span class="accent">faizan-os</span> v3.0 <span class="dim">(uptime: 3 yrs production)</span>`,
       `${OK} Mounting /dev/experience <span class="dim">→ Epicor Corporation</span>`,
       `${OK} Loading modules: <span class="link">dotnet</span> <span class="link">python</span> <span class="link">sql</span> <span class="link">azure</span>`,
-      `${OK} Syncing offline data <span class="dim">→ 25,000 records in &lt; 2 min</span>`,
+      `${OK} Syncing offline data <span class="dim">→ failed syncs: 1 in 3 → ~0</span>`,
       `${OK} Enrolling in <span class="accent">NYU Tandon</span> · MS Computer Engineering`,
       `${OK} Extending stack ↑ <span class="link">ml</span> <span class="link">mlops</span>  ↓ <span class="link">embedded</span> <span class="link">rtos</span> <span class="link">comp-arch</span>`,
       `${OK} Started <span class="accent">portfolio.service</span>`,
@@ -456,24 +460,8 @@
         </div>
       </section>
 
-      ${sec("01", "Where I fit", `<p class="sec-lead">Four kinds of roles, one thread: reliable systems from the device to the cloud, delivered to real customers.</p>
-        <div class="g-tracks">${P.focus
-          .map(
-            (f) => `<div class="card g-track reveal">
-              <div class="top"><span>${esc(LAYER[f.id] || "")}</span><span class="level">${esc(f.level)}</span></div>
-              <h3>${esc(f.title)}</h3>
-              <p class="blurb">${esc(f.lead)}</p>
-              <ul>${f.proof
-                .map(proofItem)
-                .map((p) => `<li class="${p.wip ? "wip" : ""}">${hl(p.text)}${p.wip ? ' <span class="wip-badge">in progress</span>' : ""}</li>`)
-                .join("")}</ul>
-              ${tags(f.keywords)}
-            </div>`
-          )
-          .join("")}</div>
-        <ol class="g-now reveal">${P.now
-          .map((n) => `<li class="${n.highlight ? "hi" : ""}"><span class="when">${esc(n.when)}</span><span>${esc(n.what)}</span></li>`)
-          .join("")}</ol>`)}
+      ${sec("01", "What I do", `<p class="sec-lead">Proven in three years of shipped production work.</p>
+        <div class="g-tracks">${P.focus.filter((f) => f.stage !== "building").map(trackCard).join("")}</div>`)}
 
       ${sec("02", "Impact", `<div class="g-stats">${P.impact
         .map((s) => `<div class="g-stat reveal"><div class="v">${esc(s.value)}</div><div class="l">${esc(s.label)}</div></div>`)
@@ -511,11 +499,17 @@
         )
         .join("")}</div>`)}
 
-      ${sec("05", "Skills", `<div class="g-skills">${P.skills
+      ${sec("05", "Building toward", `<p class="sec-lead">Where I'm heading next, labeled honestly: coursework, upcoming classes and work in design.</p>
+        <div class="g-tracks">${P.focus.filter((f) => f.stage === "building").map(trackCard).join("")}</div>
+        <ol class="g-now reveal">${P.now
+          .map((n) => `<li class="${n.highlight ? "hi" : ""}"><span class="when">${esc(n.when)}</span><span>${esc(n.what)}</span></li>`)
+          .join("")}</ol>`)}
+
+      ${sec("06", "Skills", `<div class="g-skills">${P.skills
         .map((g) => `<div class="card reveal"><h3>${esc(g.group)}</h3>${tags(g.items)}</div>`)
         .join("")}</div>`)}
 
-      ${sec("06", "Education", `<div class="g-edu">${P.education
+      ${sec("07", "Education", `<div class="g-edu">${P.education
         .map(
           (e) => `<div class="card reveal"><h3>${esc(e.school)}</h3><p class="deg">${esc(e.degree)}</p>
             <div class="meta">${esc(e.dates)} · ${esc(e.place)}</div><p class="note">${esc(e.note)}</p></div>`
@@ -551,7 +545,7 @@
     document.body.dataset.view = v;
     document.body.classList.remove("maximized");
     $$(".view-toggle [data-view-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.viewBtn === v)));
-    history.replaceState(null, "", v === "gui" ? "#recruiter" : location.pathname + location.search);
+    history.replaceState(null, "", v === "terminal" ? "#terminal" : location.pathname + location.search);
     window.scrollTo(0, 0);
     if (v === "gui") {
       if (!guiRendered) { renderGui(); guiRendered = true; }
@@ -627,7 +621,8 @@
   if (saved) setTheme(saved);
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  const viewFromHash = () => (/^#(recruiter|gui)$/.test(location.hash) ? "gui" : "terminal");
+  // Recruiter view is the default; the terminal lives at #terminal.
+  const viewFromHash = () => (location.hash === "#terminal" ? "terminal" : "gui");
   addEventListener("hashchange", () => setView(viewFromHash()));
   setView(viewFromHash());
 })();
