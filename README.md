@@ -5,7 +5,7 @@ A portfolio with a recruiter view (default) and an interactive terminal at `#ter
 | File | What it is |
 |---|---|
 | `data.js` | **All content** (summary, impact numbers, experience, projects, skills, education, links). Edit this to update the site. Wrap text in `**…**` to highlight it. |
-| `index.html` | Page shell |
+| `index.html` | Page shell. After changing CSS/JS, bump the `?v=` number on its links so browsers fetch the new files. |
 | `style.css` | Styles and color themes |
 | `script.js` | Terminal commands, boot sequence, recruiter view, background animation |
 | `assets/Faizan_Ahmed_Khan_Resume.pdf` | Résumé served by the `resume` command and the buttons |
